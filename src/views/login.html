@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Java Script Login Page</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<script src ="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#loginBtn').click(function() {
+
+            var username=$("#username").val();
+            var password=$("#password").val();
+            var dataString = 'username='+username+'&password='+password;
+
+
+            $.ajax({
+                type: "POST",
+                url: "/auth",
+                data: dataString,
+               // dataType: json,
+                cache: false,
+
+                statusCode: {
+                    404: function() {
+                        alert( "404: invalid login" );
+                        //document.getElementById("message").innerHTML = "access denied"
+                        location.href = "/register";
+                        //redirect to Register.html
+                    },
+                    200: function() {
+                        alert( "200: success" );
+                        //document.getElementById("message").innerHTML = "access granted"
+                        location.href = "/profile";
+                        //redirect to profile.html
+                    },
+                    500: function() {
+                        alert("500: Database error");
+                        location.href = "/";
+                        //redirect to login.html
+                    }
+                }
+
+
+            });
+
+            return false;
+
+        });
+
+    });
+
+</script>
+<div id="main">
+    <h1>Welcome</h1>
+<div id = 'form'>
+    <label for="username">Username </label>
+    <input type="text" size="30"  name="name" id="username"  /></li>
+    <label for="password">Password</label>
+    <input type="password" size="30"  name="password" id="password"  /></li>
+    <label></label>
+    <input type="button" id="loginBtn" value="loginBtn" ></li>
+    <a href="TwitterAuth.html"><input type="image" id="twitterBtn" src="twitter.png" value="twitterBtn" ></a></li>
+</div>
+</div>
+
+
+
+</body>
+</html>
