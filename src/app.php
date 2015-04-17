@@ -28,7 +28,7 @@ $app->post('/newUser', function () use ($app)
 {
 
     $try = new \Common\Authentication\SqLite();
-    $x = $try->create($_POST['username'],$_POST['password']);
+    $x = $try->create($_POST['username'],$_POST['password'],$_POST['fname'],$_POST['lname'],$_POST['email'],$_POST['$twitter'] );
 
     if ($x === 1)
     {

@@ -74,7 +74,7 @@ class SqLite implements IAuthentication
 
     }
 
-    public function create($username, $password)
+    public function create($username, $password, $fname, $lname, $email, $twitter)
     {
 
         if ($username == '')
@@ -100,7 +100,7 @@ class SqLite implements IAuthentication
             }
             else
             {
-                $db->exec("INSERT INTO user (username,password) VALUES ('$username', '$password');");
+                $db->exec("INSERT INTO user (username,password,fname,lname,email,twitter) VALUES ('$username', '$password','$fname','$lname','$email','$twitter');");
                 echo json_encode(array('success' => true, 'message' => 'Account created.'));
                 return 0;
 
