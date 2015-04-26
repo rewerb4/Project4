@@ -170,7 +170,7 @@ This is an alpha release, see readme.md for examples.
         <tasks:replace from="@name@" to="name" type="package-info" />
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
-      </dir> <!-- /tests/SwaggerTests/Fixtures/Models -->
+      </dir> <!-- /tests/SwaggerTests/Fixtures/Functions -->
       <dir name="Resources">
        <file baseinstalldir="/" name="Pet.php" role="test">
         <tasks:replace from="@name@" to="name" type="package-info" />
@@ -224,7 +224,7 @@ This is an alpha release, see readme.md for examples.
         <tasks:replace from="@name@" to="name" type="package-info" />
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
-      </dir> <!-- /tests/SwaggerTests/Fixtures1/Models -->
+      </dir> <!-- /tests/SwaggerTests/Fixtures1/Functions -->
       <dir name="Resources">
        <file baseinstalldir="/" name="FacetResource.php" role="test">
         <tasks:replace from="@name@" to="name" type="package-info" />
@@ -242,7 +242,7 @@ This is an alpha release, see readme.md for examples.
         <tasks:replace from="@name@" to="name" type="package-info" />
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
-      </dir> <!-- /tests/SwaggerTests/Fixtures2/Models -->
+      </dir> <!-- /tests/SwaggerTests/Fixtures2/Functions -->
       <dir name="Resources">
        <file baseinstalldir="/" name="Operations.php" role="test">
         <tasks:replace from="@name@" to="name" type="package-info" />

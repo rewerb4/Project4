@@ -16,12 +16,18 @@
                 {
                     var username=$("#username").val();
                     var password=$("#password").val();
-                    var dataString = 'username='+username+'&password='+password;
+                    var fname=$("#fname").val();
+                    var lname=$("#lname").val();
+                    var email=$("#email").val();
+                    var twitter=$("#twitter").val();
+                   // var createDate = new Date();
+                   // createDate = createDate.getMonth() + '/' + createDate.getDate() + '/' + createDate.getFullYear();
+                    var dataString = 'username='+username+'&password='+password+ '&fname=' + fname + '&lname=' + lname + '&email=' + email + '&twitter=' + twitter ;
                     $.ajax({
                         url: "/newUser",
                         type: "POST",
                         data: dataString,
-                        //dataType: 'json',
+                        dataType: 'JSON',
                         cache: false,
 
                         statusCode: {
@@ -33,12 +39,8 @@
                                 alert("200: successful login create");
                                 location.href = "/";
                                 //redirect to login.html
-                            },
-                            500: function () {
-                                alert("500: Database error");
-                                location.href = "/";
-                                //redirect to login.html
                             }
+
                         }
                     });
                 }

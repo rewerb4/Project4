@@ -24,6 +24,6 @@ interface IAuthentication
 *
 * @access public
 */
-public function authenticate($username, $password);
-public function create ($username, $password, $fname, $lname, $email, $twitter);
+public function authenticate();
+
 }

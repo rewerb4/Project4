@@ -13,30 +13,37 @@
 
         $('#loginBtn').click(function() {
 
-            var username=$("#username").val();
+            var username=$("#username").val()
             var password=$("#password").val();
-            var dataString = 'username='+username+'&password='+password;
-
+            var dataString = 'username='+ username + '&password='+ password ;
 
             $.ajax({
                 type: "POST",
                 url: "/auth",
                 data: dataString,
-               // dataType: json,
+                dataType:'JSON',
                 cache: false,
 
                 statusCode: {
                     404: function() {
                         alert( "404: invalid login" );
-                        //document.getElementById("message").innerHTML = "access denied"
+
                         location.href = "/register";
                         //redirect to Register.html
                     },
-                    200: function() {
+                    200: function(result) {
                         alert( "200: success" );
-                        //document.getElementById("message").innerHTML = "access granted"
-                        location.href = "/profile";
-                        //redirect to profile.html
+                        var profile = "<div><p>"
+                        +"Username: " + result["username"] + "<br />"
+                        +"First name: " + result["fname"] + "<br />"
+                        +"Last name: " + result["lname"]+ "<br />"
+                        +"Email: " + result["email"] + "<br />"
+                        +"Twitter Username: " + result["twitter"]+ "<br />"
+                        +"Registration Date: " + result["time"] +
+                        "</p></div>";
+
+                        $("#form").html(profile);
+
                     },
                     500: function() {
                         alert("500: Database error");
@@ -46,7 +53,7 @@
                 }
 
 
-            });
+                });
 
             return false;
 

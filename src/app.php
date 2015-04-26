@@ -14,62 +14,69 @@ $app->get('/register', function()
     require_once'../src/views/Register.html';
 });
 
-$app->get('/profile', function()
-{
-    require_once'../src/views/profile.html';
-});
 
 $app->post('/twitter', function()
 {
     require_once '../src/Common/Authentication/TwitterAuth.php';
 });
 
-$app->post('/newUser', function () use ($app)
-{
-
-    $try = new \Common\Authentication\SqLite();
-    $x = $try->create($_POST['username'],$_POST['password'],$_POST['fname'],$_POST['lname'],$_POST['email'],$_POST['$twitter'] );
-
-    if ($x === 1)
-    {
-        echo $app->response()->setStatus(404);
-        echo $app->response()->getStatus();
-        //return json_encode($app->response->header("Profile:Http:localhost:8080/profile/".$_POST[username],200));
-
-    }
-
-
-    else
-    {
-
-        echo $app->response()->setStatus(200);
-        echo $app->response()->getStatus();
-    }
-});
 
 $app->post('/auth', function() use ($app)
 {
-    //$username = ' ';
-   // $password = ' ';
-    //if(json_decode($body = $app->request->getBody()) != Null) {
-       // $username = $body['username'];
-       // $username = $body['username'];
-    //}
-        $try = new \Common\Authentication\SqLite();
-        $x = $try->authenticate($_POST['username'], $_POST['password']);
 
-        if ($x === 1) {
+        $username = $app->request->params('username');
+        $password = $app->request->params('password');
+        $x = new \Common\Authentication\SqLite($username,$password);
+
+
+        if ($x->authenticate() === 1)
+        {
             echo $app->response()->setStatus(200);
-            echo $app->response()->getStatus();
-            //return json_encode($app->response->header("Profile:Http:localhost:8080/profile/".$_POST[username],200));
+            $user = new \Functions\ValuesSet($username, $password);
+            $profile = new \Common\Authentication\SQLite2($user);
 
-        } else {
+            $X = $profile->getProfileData();
+            $X = json_encode($X);
+            echo $X;
 
-            echo $app->response()->setStatus(404);
-            echo $app->response()->getStatus();
+        }
+        else
+        {
+
+            $app->response()->setStatus(404);
+
         }
 
 
 });
+
+    $app->post('/newUser', function() use ($app)
+        {
+
+            $user = new \Functions\ValuesSet($app->request->params('username'), $app->request->params('password'));
+            $user->setFirstName($app->request->params('fname'));
+            $user->setLastName($app->request->params('lname'));
+            $user->setEmail($app->request->params('email'));
+            $user->setTwitterName($app->request->params('twitter'));
+
+
+
+            $reg = new \Common\Authentication\SQLite2($user);
+            $y = $reg->registerNewUser();
+            if($y!=1)
+                    {
+
+                    $app->response()->setStatus(404);
+                    echo $app->response()->getStatus();return json_encode($app->response()->header('failed.',404));
+                }
+            if ($y==1)
+               {
+
+                    $app->response()->setStatus(200);
+                    echo $app->response()->getStatus();
+                return json_encode($app->response()->header('success',200));
+               }
+        }
+    );
 
 $app->run();

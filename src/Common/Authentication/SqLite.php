@@ -23,88 +23,39 @@ class SqLite implements IAuthentication
      *
      * @access public
      */
-    public function authenticate($username, $password)
+    public function __construct($username, $password)
     {
+        $this->username = $username;
+        $this->password = $password;
 
-// TODO: Implement authenticate() method.
-//open database
-
-
-        $db = new PDO('sqlite:../src/Common/Authentication/Users_PDO');
-
-
-        if(!$db)
+        try
         {
-        return 1;
+            $this->conn = new PDO('sqlite:../src/Common/Authentication/Users_PDO');
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
-        /*
-        else
+        catch (PDOException $e)
         {
-        echo "Opened database successfully\n";
+            echo 'ERROR: ' . $e->getMessage();
         }
-
-        $db->exec("CREATE TABLE user (Id INTEGER PRIMARY KEY, username VARCHAR, password VARCHAR, fname TEXT, lname TEXT, email VARCHAR, twitter VARCHAR, time TIMESTAMP
-        DEFAULT CURRENT_TIMESTAMP)");
-
-
-        $db->exec("INSERT INTO user (username,password,fname,lname,email,twitter) VALUES ('mat', 'hi','mathew','brewer','yourmail@gmail.com','twitterDude');");
-
-        if (!$ret)
-        {
-        echo $db->lastErrorMsg();
-        }
-        else
-        {
-        echo "Records created successfully\n";
-        }
-        */
-
-        $rows = $db->query("SELECT count(*) as count FROM user WHERE username = '$username' AND password= '$password'");
-        $numRows = $rows->fetchColumn();
-
-        if ($numRows == 1) {
-
-            return 1;
-        } else {
-
-            return 0;
-        }
-//close database
-        $db = NULL;
-
     }
 
-    public function create($username, $password, $fname, $lname, $email, $twitter)
+
+        public function authenticate()
     {
+               $data=$this->conn->query('SELECT username FROM user WHERE username = '.$this->conn->quote($this->username).'AND password = '.$this->conn->quote($this->password));
 
-        if ($username == '')
-        {
-            return 1;
-        }
-        if ($password == '')
-        {
-            return 1;
-        }
-        else
-        {
-
-            $db = new PDO('sqlite:../src/Common/Authentication/Users_PDO');
-
-            $rows = $db->query("SELECT count(*) as count FROM user WHERE username = '$username' AND password= '$password'");
-            $numRows = $rows->fetchColumn();
-
-            if ($numRows == 1)
-            {
-                echo "username and password already used";
-                return 1;
-            }
-            else
-            {
-                $db->exec("INSERT INTO user (username,password,fname,lname,email,twitter) VALUES ('$username', '$password','$fname','$lname','$email','$twitter');");
-                echo json_encode(array('success' => true, 'message' => 'Account created.'));
-                return 0;
-
-            }
-        }
+                $result=$data->fetchAll();
+                if (count($result)!=1)
+                    {
+                      //echo "Authentication failed";
+                        return 0;
+       }
+        //echo "Authentication success";
+	return 1;
     }
+
+
+
+
+
 }
