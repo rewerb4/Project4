@@ -16,7 +16,7 @@ class SQLite2
 
 
             try {
-               $this->conn = new PDO('sqlite:../src/Common/Authentication/Users_PDO');
+                $this->conn = new PDO('sqlite:../src/Common/Authentication/users_pdo.db');
 
                 $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {

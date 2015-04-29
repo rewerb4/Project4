@@ -1,10 +1,10 @@
 <?php
 /**
-* Created by PhpStorm.
-* User: Owner
-* Date: 3/17/2015
-* Time: 8:26 PM
-*/
+ * Created by PhpStorm.
+ * User: Owner
+ * Date: 3/17/2015
+ * Time: 8:26 PM
+ */
 
 namespace Common\Authentication;
 
@@ -30,7 +30,7 @@ class SqLite implements IAuthentication
 
         try
         {
-            $this->conn = new PDO('sqlite:../src/Common/Authentication/Users_PDO');
+            $this->conn = new PDO('sqlite:../src/Common/Authentication/users_pdo.db');
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch (PDOException $e)
@@ -40,18 +40,18 @@ class SqLite implements IAuthentication
     }
 
 
-        public function authenticate()
+    public function authenticate()
     {
-               $data=$this->conn->query('SELECT username FROM user WHERE username = '.$this->conn->quote($this->username).'AND password = '.$this->conn->quote($this->password));
+        $data=$this->conn->query('SELECT username FROM user WHERE username = '.$this->conn->quote($this->username).'AND password = '.$this->conn->quote($this->password));
 
-                $result=$data->fetchAll();
-                if (count($result)!=1)
-                    {
-                      //echo "Authentication failed";
-                        return 0;
-       }
+        $result=$data->fetchAll();
+        if (count($result)!=1)
+        {
+            //echo "Authentication failed";
+            return 0;
+        }
         //echo "Authentication success";
-	return 1;
+        return 1;
     }
 
 
