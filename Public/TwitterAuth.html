@@ -5,16 +5,67 @@
     <title></title>
 </head>
 <body>
+
+
+<script src ="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#twitterBtn').click(function() {
+            var twitter=$("#twitter").val();
+            var dataString = 'twitter='+ twitter ;
+
+            $.ajax({
+                type: 'post',
+                url: '/twitter',
+                data: dataString,
+                dataType: 'json',
+                success: function(result)
+                {
+                    if (result.error)
+                    {
+                        $('#profile').html(result.error);
+                    }
+                    else
+                    {
+                        $('#profile').html('');
+                        $('#profile')
+                                .append($('<div>').append($('<span>').append('ID: ' + result.Id)))
+                                .append($('<div>').append($('<span>').append('Email: ' + result.email)))
+                                .append($('<div>').append($('<span>').append('First Name: ' + result.fname)))
+                                .append($('<div>').append($('<span>').append('Last Name: ' + result.lname)))
+                                .append($('<div>').append($('<span>').append('Twitter: ' + result.twitter)))
+                                .append($('<div>').append($('<span>').append('Username: ' + result.username)))
+                                .append($('<div>').append($('<span>').append('Time: ' + result.time))
+                        );
+                    }
+                },
+                error: function()
+                {
+                    alert('AJAX Error');
+                }
+            });
+
+            return false;
+
+        });
+
+    });
+
+</script>
+
 <h1>Welcome to Twitter auth page</h1>
 <h3>Enter your Twitter Information</h3>
 <div id = 'form'>
     <label for="twitterName">Twitter Username </label>
-    <input type="text" size="30"  name="name" id="username"  /></li><br /><br />
+    <input type="text" name="twitter" size="30" id="twitter"  /></li><br /><br />
 
     <label></label>
     <input type="button" id="twitterBtn" value="twitterBtn" ></li><br /><br />
 
 </div>
+
+<div id="profile"></div>
 
 </body>
 </html>

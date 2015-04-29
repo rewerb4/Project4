@@ -34,13 +34,13 @@
                     200: function(result) {
                         alert( "200: success" );
                         var profile = "<div><p>"
-                        +"Username: " + result["username"] + "<br />"
-                        +"First name: " + result["fname"] + "<br />"
-                        +"Last name: " + result["lname"]+ "<br />"
-                        +"Email: " + result["email"] + "<br />"
-                        +"Twitter Username: " + result["twitter"]+ "<br />"
-                        +"Registration Date: " + result["time"] +
-                        "</p></div>";
+                                +"Username: " + result["username"] + "<br />"
+                                +"First name: " + result["fname"] + "<br />"
+                                +"Last name: " + result["lname"]+ "<br />"
+                                +"Email: " + result["email"] + "<br />"
+                                +"Twitter Username: " + result["twitter"]+ "<br />"
+                                +"Registration Date: " + result["time"] +
+                                "</p></div>";
 
                         $("#form").html(profile);
 
@@ -53,7 +53,7 @@
                 }
 
 
-                });
+            });
 
             return false;
 
@@ -64,15 +64,15 @@
 </script>
 <div id="main">
     <h1>Welcome</h1>
-<div id = 'form'>
-    <label for="username">Username </label>
-    <input type="text" size="30"  name="name" id="username"  /></li>
-    <label for="password">Password</label>
-    <input type="password" size="30"  name="password" id="password"  /></li>
-    <label></label>
-    <input type="button" id="loginBtn" value="loginBtn" ></li>
-    <a href="TwitterAuth.html"><input type="image" id="twitterBtn" src="twitter.png" value="twitterBtn" ></a></li>
-</div>
+    <div id = 'form'>
+        <label for="username">Username </label>
+        <input type="text" size="30"  name="name" id="username"  /></li>
+        <label for="password">Password</label>
+        <input type="password" size="30"  name="password" id="password"  /></li>
+        <label></label>
+        <input type="button" id="loginBtn" value="loginBtn" ></li>
+        &nbsp; or login with Twitter <a href="TwitterAuth.html"><input type="image" id="twitterBtn" src="twitter.png" value="twitterBtn" style="vertical-align:middle;"></a></li>
+    </div>
 </div>
 
 
